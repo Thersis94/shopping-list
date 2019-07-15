@@ -1,46 +1,46 @@
-$(document).ready(function(){
-    console.log("doc is ready")
 
-// code for creating a new list item
-    $('#js-shopping-list-form').submit(event => {
-        event.preventDefault()
-        console.log("item was submitted")
 
-        const newItem = $(this).find(
-            'input[name="shopping-list-entry"]').val()
+//code to add item to list
+$('#js-shopping-list-form').on('submit', function(event) {
 
-            console.log(newItem)
+    // prevent form submission to remote server
 
-            $(".shopping-list").append(
-            $(`<li>
-                <span class="shopping-item">${newItem}</span>
-                <div class="shopping-item-controls">
-                  <button class="shopping-item-toggle">
-                    <span class="button-label">check</span>
-                  </button>
-                  <button class="shopping-item-delete">
-                    <span class="button-label">delete</span>
-                  </button>
-                </div>
-              </li>`)
-              )
-    })
+    event.preventDefault()
+
+    //create a variable that holds the input forms value
+
+    const newItem = $('#shopping-list-entry').val()
+
+    //append HTML to include the new list item
+    
+    $('.shopping-list').append(
+        `<li>
+        <span class="shopping-item">${newItem}</span>
+        <div class="shopping-item-controls">
+          <button class="shopping-item-toggle">
+            <span class="button-label">check</span>
+          </button>
+          <button class="shopping-item-delete">
+            <span class="button-label">delete</span>
+          </button>
+        </div>
+      </li>`
+    )
 })
-// code for cheeking off a list item
-$('.shopping-list').on('click', function() {
-$('.shopping-item-toggle').on('click', function(event){
-    console.log("check was clicked")
-    $(this).parents().eq(1).css("text-decoration", "line-through")
-    console.log(this)
-})
-})
-//code for deleting a list item
 
-$('.shopping-list').on('click', function() {
-$('.shopping-item-delete').on('click', function(event){
-console.log("delete was clicked")
-$(this).parents().eq(1).remove()
+//code to cross out completed list items
 
+$('.shopping-list').on('click', '.shopping-item-toggle', function(event){
+    
+    $(this).closest('li').find('.shopping-item').toggleClass("shopping-item__checked")
+    
+})
+
+//code to delete list items
+
+$('.shopping-list').on('click', '.shopping-item-delete', function(event){
+
+    $(this).closest('li').remove()
 
 })
-})
+
